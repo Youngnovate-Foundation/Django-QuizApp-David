@@ -1,8 +1,10 @@
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login
 from django.views import View
 from django.contrib import messages
+from .forms import User_Form
 
 # Create your views here.
 class Index_View(View):
@@ -19,6 +21,20 @@ class Index_View(View):
             if user is not None:
                 login(request, user)
                 messages.success(request, "Successfully Logged-In")
-                return redirect('')
+                return HttpResponse("<h1>Hello</h1>")
             else:
                 messages.error(request, f'Login Failed!!')
+
+class Register_View(View):
+    def get(self, request):
+        registraton_form = User_Form()
+        return render(request, 'users/register.html', {'registraton_form':registraton_form})
+    
+    def post(self, request):
+        registraton_form = User_Form(data=request.POST)
+        if registraton_form.is_valid():
+            user = registraton_form.save()
+            user.refresh_from_db()
+            login(request, user)
+            messages.success(request, "Sucessfully registered.")
+            return HttpResponse("<h1>Hello</h1>")

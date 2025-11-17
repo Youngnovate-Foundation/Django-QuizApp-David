@@ -1,0 +1,10 @@
+{% extends 'base/base.html' %}
+{% block title %}Quiz App - Register{% endblock title %}
+
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    {{registraton_form.as_p}}
+    <button type="submit">Register</button>
+</form>
+{% endblock content %}

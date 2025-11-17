@@ -3,6 +3,7 @@
 {% block title %}Quiz App - Login{% endblock title %}
 
 {% block content %}
+<a href="{% url 'register' %}">Register</a>
 <form action="" method="post">
     {% csrf_token %}
     {{login_form.as_p}}

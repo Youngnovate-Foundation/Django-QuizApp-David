@@ -17,9 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from users.views import Index_View
+from users import urls as users_app_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', Index_View.as_view(), name='index')
+    path('', include(users_app_urls))
 ]
