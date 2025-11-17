@@ -5,6 +5,7 @@ class  Quiz(models.Model):
     title = models.CharField(max_length=250)
     description = models.TextField(blank=True)
     created_at = models.DateField(auto_now_add=True)
+    duration = models.IntegerField(default=5, help_text="Duration in minutes")
 
     def __str__(self):
         return self.title
