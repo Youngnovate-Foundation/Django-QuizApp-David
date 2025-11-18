@@ -24,13 +24,21 @@ class Question(models.Model):
     option2 = models.CharField(max_length=150, blank=True, null=True)
     option3 = models.CharField(max_length=150, blank=True, null=True)
     option4 = models.CharField(max_length=150, blank=True, null=True)
-    correct_option = models.CharField(max_length=1, choices=[
+
+    def __str__(self):
+        return f'{self.quiz.title} - {self.question_text}'
+
+class Answer(models.Model):
+    Options = [
       ('A', 'Option 1'),
       ('B', 'Option 2'),
       ('C', 'Option 3'),
       ('D', 'Option 4'),
-    ])
-    correct_answer_text = models.TextField(blank=True, null=True)
+    ]
+
+    question_text = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
+    correct_option = models.CharField(max_length=1, choices=Options, blank=True, null=True)
+    answer_text = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return self.question_text
+        return f'{self.question_text} - {self.correct_option}{self.answer_text}'
