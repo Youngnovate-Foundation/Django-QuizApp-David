@@ -18,8 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 
 from users import urls as users_app_urls
+from quiz_app import urls as quiz_app_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(users_app_urls))
+    path('', include(users_app_urls)),
+    path('', include(quiz_app_urls)),
 ]
