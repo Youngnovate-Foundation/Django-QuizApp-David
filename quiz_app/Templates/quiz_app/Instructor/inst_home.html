@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+{% block title %}Quiz App - Home{% endblock title %}
+
+{% block content %}
+
+<h1>Instructor Dashboard</h1>
+
+<h2>Your Quizzes</h2>
+
+
+{% comment %} {% if quizzes %}
+	<ul>
+	{% for quiz in quizzes %}
+		<li>
+			<strong>{{ quiz.title }}</strong> — {{ quiz.description }}
+			(<a href="{% url 'add_question' quiz.id %}">Add Question</a>)
+		</li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<p>No quizzes yet. <a href="{% url 'create_quiz' %}">Create one</a>.</p>
+{% endif %} {% endcomment %}
+
+{% comment %} <a href="{% url 'add_answer' %}">Add Answer</a> {% endcomment %}
+{% endblock content %}
