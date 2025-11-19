@@ -22,10 +22,10 @@
                 <form action="" method="post" class="">
                     {% csrf_token %}
                     {{ login_form | crispy }}
-                    <button class="w-100 mt-2 mb-2 btn btn-lg rounded-3 btn-primary py-2" type="submit">Login</button>
+                    <button class="w-100 mt-2 mb-2 btn rounded-3 btn-warning py-3" type="submit">Login</button>
                     <hr class="my-4">
                     <h2 class="fs-5 fw-bold mb-3">Or are you a new user?</h2>
-                    <a href="{% url 'register' %}" class="w-100 py-2 mb-2 btn btn-outline-secondary rounded-3 text-center d-block">Register Here</a>
+                    <a href="{% url 'register' %}" class="w-100 py-3 mb-2 btn btn-outline-warning rounded-3 text-center d-block">Register Here</a>
                 </form>
             </div>
         </div>

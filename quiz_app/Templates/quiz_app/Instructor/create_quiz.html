@@ -1,6 +1,23 @@
 {% extends 'base/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
 {% block title %}Quiz App - Create Quiz{% endblock title %}
 
+{% comment %} Navigation Items {% endcomment %}
+{% block nav-items %}
+    <li class="nav-item">
+        <a href="{% url 'instructor_home' %}" class="nav-link active" aria-current="page">Home</a>
+    </li>
+    <li class="nav-item">
+        <a href="{% url 'create_quiz' %}" class="nav-link">Create Quiz</a>
+    </li>
+    <li class="nav-item">
+        <a href="#" class="nav-link">Logout</a>
+    </li>
+{% endblock nav-items %}
+
+{% comment %} Main Body Content {% endcomment %}
 {% block content %}
 <form action="" method="post">
     {% csrf_token %}

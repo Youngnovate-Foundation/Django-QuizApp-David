@@ -1,25 +1,43 @@
 {% extends 'base/base.html' %}
+{% load static %}
+
 {% block title %}Quiz App - Home{% endblock title %}
 
+{% block nav-items %}
+    <li class="nav-item">
+        <a href="{% url 'instructor_home' %}" class="nav-link">Home</a>
+    </li>
+    <li class="nav-item">
+        <a href="{% url 'create_quiz' %}" class="nav-link">Create Quiz</a>
+    </li>
+    <li class="nav-item">
+        <a href="#" class="nav-link">Logout</a>
+    </li>
+{% endblock nav-items %}
+
 {% block content %}
+    <h1>Instructor Dashboard</h1>
 
-<h1>Instructor Dashboard</h1>
-
-<h2>Your Quizzes</h2>
-
-
-{% comment %} {% if quizzes %}
-	<ul>
-	{% for quiz in quizzes %}
-		<li>
-			<strong>{{ quiz.title }}</strong> — {{ quiz.description }}
-			(<a href="{% url 'add_question' quiz.id %}">Add Question</a>)
-		</li>
-	{% endfor %}
-	</ul>
-{% else %}
-	<p>No quizzes yet. <a href="{% url 'create_quiz' %}">Create one</a>.</p>
-{% endif %} {% endcomment %}
-
-{% comment %} <a href="{% url 'add_answer' %}">Add Answer</a> {% endcomment %}
+    <h2>Your Quizzes</h2>
+    <main class="d-flex justify-content-evenly flex-wrap pt-5">
+        {% if quizzes %}
+            {% for quiz in quizzes %}
+                <div class="card" style="width: 25%;">
+                    <div class="card-body">
+                        <div class="p-4 mb-4">
+                            <h5 class="card-title mb-4">{{ quiz.title }}</h5>
+                        <h6 class="card-subtitle mb-3 text-body-secondary">Description</h6>
+                        <p class="card-text">{{ quiz.description }}</p>
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{% url 'add_question' quiz.id %}" class="btn btn-warning py-2">Add Question</a>
+                            <a href="#" class="btn btn-outline-secondary py-2">Another link</a>
+                        </div>
+                        </div>
+                    </div>                  
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No quizzes yet. <a href="{% url 'create_quiz' %}">Create one</a>.</p>
+        {% endif %}
+    </main>
 {% endblock content %}
