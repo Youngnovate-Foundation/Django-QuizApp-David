@@ -1,9 +1,10 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.views import View
 from django.contrib import messages
 from .forms import User_Form
+
 
 # Create your views here.
 class Index_View(View):
@@ -53,3 +54,7 @@ class Register_View(View):
         else:
             messages.error(request, "Registration Failed. Please try again.")
             return render(request, 'users/register.html', {'registraton_form':registraton_form})
+        
+def logout(request):
+    logout(request)
+    return redirect('index')
