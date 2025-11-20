@@ -47,7 +47,7 @@ class Add_QuestionView(View):
             messages.error(request, "Question creation Failed")
             return render(request, 'quiz_app/Instructor/add_question.html', {'add_question_form': add_question_form, 'quiz_id': quiz_id})
 
-def view_qiuz_instructor(request, quiz_id):
-    quiz = Quiz.objects.get(id=quiz_id)
+def view_qiuz_instructor(request, question_id):
+    quiz = Quiz.objects.get(id=question_id)
     questions = quiz.questions.all()
-    return render(request, 'quiz_app/Instructor/view_quiz.html', {'quiz': quiz,'questions': questions})
+    return render(request, 'quiz_app/Instructor/view_quiz_instructor.html', {'quiz': quiz,'questions': questions})

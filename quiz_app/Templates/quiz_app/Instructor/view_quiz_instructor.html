@@ -1,0 +1,75 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Quiz App - View Quiz{% endblock title %}
+
+{% block nav-items %}
+    <li class="nav-item">
+        <a href="{% url 'instructor_home' %}" class="nav-link">Home</a>
+    </li>
+    <li class="nav-item">
+        <a href="{% url 'create_quiz' %}" class="nav-link">Create Quiz</a>
+    </li>
+    <li class="nav-item">
+        <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+    </li>
+{% endblock nav-items %}
+
+{% block content %}
+    {% if questions %}
+        <div class="card w-50 p-5 mx-auto">
+            <h3 class="card-title text-center">{{ quiz.title }}</h3>
+            {% for question in questions %}
+                <h5 class="card-subtitle my-2 text-body-secondary">Question {{ forloop.counter }}: ({{ question.question_type}})</h5>
+                <p class="card-text">{{ question.question_text }}</p>
+                {% if question.question_type == 'MCQ' %}
+                    <ul class="list-group mb-3">
+                        {% if question.option1 %}
+                            <li class="list-group-item {% if question.correct_option == 'A' %}list-group-item-success fw-bold{% endif %}">
+                                A. {{ question.option1 }}
+                                {% if question.correct_option == 'A' %}
+                                    <span class="badge bg-success ms-2">Correct</span>
+                                {% endif %}
+                            </li>
+                        {% endif %}
+                        {% if question.option1 %}
+                            <li class="list-group-item {% if question.correct_option == 'B' %}list-group-item-success fw-bold{% endif %}">
+                                B. {{ question.option1 }}
+                                {% if question.correct_option == 'B' %}
+                                    <span class="badge bg-success ms-2">Correct</span>
+                                {% endif %}
+                            </li>
+                        {% endif %}
+                        {% if question.option1 %}
+                            <li class="list-group-item {% if question.correct_option == 'C' %}list-group-item-success fw-bold{% endif %}">
+                                C. {{ question.option1 }}
+                                {% if question.correct_option == 'C' %}
+                                    <span class="badge bg-success ms-2">Correct</span>
+                                {% endif %}
+                            </li>
+                        {% endif %}
+                        {% if question.option1 %}
+                            <li class="list-group-item {% if question.correct_option == 'D' %}list-group-item-success fw-bold{% endif %}">
+                                D. {{ question.option1 }}
+                                {% if question.correct_option == 'D' %}
+                                    <span class="badge bg-success ms-2">Correct</span>
+                                {% endif %}
+                            </li>
+                        {% endif %}
+                    </ul>
+                    {% elif question.question_type == 'SA' %}
+                        <div class="mb-3">
+                            <label class="form-label">Short Answer</label>
+                            <textarea class="form-control" rows="3" readonly>{% if question.answer_text_SA %}{{ question.answer_text_SA }}{% endif %}</textarea>
+                        </div>
+                    {% else %}
+                        {{ question.answer_text_TF }}
+                {% endif %}
+            {% endfor %}
+            <a href="{% url 'instructor_home' %}" class="btn btn-warning mt-3 py-2 w-25">Back</a>
+            {% else %}
+                <h3 class="card-title">{{ quiz.title }}</h3>
+                <p>No questions added yet for this quiz<a href="{% url 'add_question' quiz.id %}">Create one</a>.</p>
+        </div>
+    {% endif %}
+{% endblock content %}

@@ -20,7 +20,7 @@ class Quiz_Form(forms.ModelForm):
 class Question_Form(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['question_type', 'question_text', 'option1', 'option2', 'option3', 'option4', 'correct_option', 'answer_text']
+        fields = ['question_type', 'question_text', 'option1', 'option2', 'option3', 'option4', 'correct_option', 'answer_text_SA', 'answer_text_TF']
         labels = {
             # 'quiz': 'Select Quiz',
             'question_type': 'Question Type',
@@ -30,7 +30,8 @@ class Question_Form(forms.ModelForm):
             'option3': 'Option C',
             'option4': 'Option D',
             'correct_option': 'Correct Option (For MCQ)',
-            'answer_text': 'Answer Text (For Short Answer)',
+            'answer_text_SA': 'Answer Text (For Short Answer Questions)',
+            'answer_text_TF': 'Answer (For True/False Questions)',
         }
 
         widgets ={
@@ -42,5 +43,6 @@ class Question_Form(forms.ModelForm):
             'option3': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter option C (For only MCQ)'}),
             'option4': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter option D (For only MCQ)'}),
             'correct_option': forms.Select(attrs={'class': 'form-select'}),
-            'answer_text': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter answer text', 'rows': 3}),
+            'answer_text_SA': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter answer text', 'rows': 3}),
+            'answer_text_TF': forms.Select(attrs={'class': 'form-select'}),
         }

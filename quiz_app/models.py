@@ -32,7 +32,8 @@ class Question(models.Model):
     option3 = models.CharField(max_length=150, blank=True, null=True)
     option4 = models.CharField(max_length=150, blank=True, null=True)
     correct_option = models.CharField(max_length=1, choices=Options, blank=True, null=True)
-    answer_text = models.TextField(blank=True, null=True)
+    answer_text_SA = models.TextField(blank=True, null=True)
+    answer_text_TF = models.CharField(blank=True, null=True, choices=[('True', 'True'), ('False', 'False')])
 
     def __str__(self):
         return f'{self.quiz.title} - {self.question_text}'
