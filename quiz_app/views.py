@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib import messages
-from .models import Quiz, Question, Answer
-from .forms import Quiz_Form, Question_Form, Answer_Form
+from .models import Quiz, Question
+from .forms import Quiz_Form, Question_Form
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -46,3 +46,8 @@ class Add_QuestionView(View):
         else:
             messages.error(request, "Question creation Failed")
             return render(request, 'quiz_app/Instructor/add_question.html', {'add_question_form': add_question_form, 'quiz_id': quiz_id})
+
+def view_qiuz_instructor(request, quiz_id):
+    quiz = Quiz.objects.get(id=quiz_id)
+    questions = quiz.questions.all()
+    return render(request, 'quiz_app/Instructor/view_quiz.html', {'quiz': quiz,'questions': questions})

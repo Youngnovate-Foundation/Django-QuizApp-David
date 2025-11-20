@@ -19,9 +19,11 @@
 
 {% comment %} Main Body Content {% endcomment %}
 {% block content %}
-<form action="" method="post">
-    {% csrf_token %}
-    {{create_quiz_form.as_p}}
-    <button type="submit">Create</button>
-</form>
+    <div class="card w-50 p-5 mx-auto">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{create_quiz_form | crispy }}
+            <button type="submit" class="btn btn-warning mt-3 py-3 w-100">Create Quiz</button>
+        </form>
+    </div>
 {% endblock content %}
