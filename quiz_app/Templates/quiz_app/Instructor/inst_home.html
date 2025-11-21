@@ -34,8 +34,6 @@
                                 </div>
                             </div>                  
                         </div>
-                    {% else %}
-                        <p>No quizzes yet.<a href="{% url 'create_quiz' %}" class="btn btn-warning m-3"> Create one</a>.</p>
                     {% endif %}
             {% endfor %}
         {% else %}
