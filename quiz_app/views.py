@@ -4,11 +4,14 @@ from django.contrib import messages
 from .models import Quiz, Question
 from .forms import Quiz_Form, Question_Form
 from django.contrib.auth.decorators import login_required
+from users.models import CustomUser
 
 # Create your views here.
 @login_required
 def stu_home(request):
-    return render(request, 'quiz_app/Student/stu_home.html')
+    quizzes = Quiz.objects.all()
+    users = CustomUser.objects.all()
+    return render(request, 'quiz_app/Student/stu_home.html', {'quizzes': quizzes, 'users': users})
 
 @login_required
 def inst_home(request):
@@ -23,7 +26,9 @@ class Create_QuizView(View):
     def post(self, request):
         create_quiz_form = Quiz_Form(request.POST)
         if create_quiz_form.is_valid():
-            create_quiz_form.save()
+            quiz_instance = create_quiz_form.save(commit=False)
+            quiz_instance.user = request.user
+            quiz_instance.save()
             messages.success(request, "Quiz created successfully!")
             return redirect('instructor_home')
         else:
@@ -47,7 +52,12 @@ class Add_QuestionView(View):
             messages.error(request, "Question creation Failed")
             return render(request, 'quiz_app/Instructor/add_question.html', {'add_question_form': add_question_form, 'quiz_id': quiz_id})
 
-def view_qiuz_instructor(request, question_id):
-    quiz = Quiz.objects.get(id=question_id)
+def view_qiuz_instructor(request, quiz_id):
+    quiz = Quiz.objects.get(id=quiz_id)
     questions = quiz.questions.all()
     return render(request, 'quiz_app/Instructor/view_quiz_instructor.html', {'quiz': quiz,'questions': questions})
+
+def view_quiz_student(request, quiz_id):
+    quiz = Quiz.objects.get(id=quiz_id)
+    questions = quiz.questions.all()
+    return render(request, 'quiz_app/Student/view_quiz_student.html', {'quiz': quiz,'questions': questions})

@@ -8,7 +8,7 @@ class Quiz_Form(forms.ModelForm):
         labels = {
             'title': 'Quiz Title',
             'description': 'Quiz Description',
-            'duration': 'Duration (in minutes)',
+            'duration': 'Duration',
         }
 
         widgets = {
