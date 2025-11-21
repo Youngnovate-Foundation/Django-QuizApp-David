@@ -39,3 +39,26 @@ class Question(models.Model):
 
     def __str__(self):
         return f'{self.quiz.title} - {self.question_text}'
+    
+class Quiz_Attempt(models.Model):
+    student = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    started_at = models.DateTimeField(auto_now_add=True)
+    completed_at = models.DateTimeField(blank=True, null=True)
+    score = models.IntegerField(null=True, blank=True)
+
+    time_remaining = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.student} - {self.quiz.title} - score: {self.score}'
+    
+class Student_Answer(models.Model):
+    attempt = models.ForeignKey(Quiz_Attempt, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    selected_option = models.CharField(max_length=1, choices=Question.Options, null=True, blank=True)
+    answer_text = models.TextField(null=True, blank=False)
+
+    class Meta:
+        unique_together = ('attempt', 'question')
+
+        
