@@ -17,7 +17,7 @@
 
 {% block content %}
     {% if questions %}
-        <div class="card w-50 p-5 mx-auto mb-5">
+        <div class="card w-50 p-5 mx-auto my-5">
             <h3 class="card-title text-center">{{ quiz.title }}</h3>
             {% for question in questions %}
                 <h5 class="card-subtitle my-2 text-body-secondary">Question {{ forloop.counter }}: ({{ question.question_type}})</h5>
@@ -80,3 +80,5 @@
         </div>
     {% endif %}
 {% endblock content %}
+
+{% block footer %}{% endblock footer %}

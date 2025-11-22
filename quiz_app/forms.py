@@ -20,7 +20,7 @@ class Quiz_Form(forms.ModelForm):
 class Question_Form(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['question_type', 'question_text', 'option1', 'option2', 'option3', 'option4', 'correct_option', 'answer_text_SA', 'answer_text_TF']
+        fields = ['question_type', 'question_text', 'option1', 'option2', 'option3', 'option4', 'correct_option', 'answer_text_SA', 'answer_text_TF', 'point']
         labels = {
             # 'quiz': 'Select Quiz',
             'question_type': 'Question Type',
