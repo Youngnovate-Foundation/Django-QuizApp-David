@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Quiz App - Start Quiz{% endblock title %}
+
+{% block nav-items %}
+    <li class="nav-item">
+        <a href="{% url 'instructor_home' %}" class="nav-link">Home</a>
+    </li>
+    <li class="nav-item">
+        <a href="" class="nav-link">Show Results</a>
+    </li>
+    <li class="nav-item">
+        <a href="{% url 'logout' %}" class="nav-link">Logout</a>
+    </li>
+{% endblock nav-items %}
+
+{% block content %}
+    <div class="card w-50 p-5 mx-auto" style="margin: 5rem;">
+        <h3 class="card-title text-center display-5 fw-bold">{{ quiz.title }}</h3>
+        <h5 class="card-subtitle my-2 text-body-secondary display-6">Instructions</h5>
+        <p class="card-text" style="line-height: 2;">
+            Answer all Questions from the quiz. Your answer for True or False Questions must be capitalized. (True/False) not (true/false). <br>For Short answer questions use appopriate case. Capitalize where necessary. <br> <small class="fw-bold">Good Luck!!</small>
+        </p>
+        <div class="d-flex justify-content-between mt-3">
+            <h5 class="card-subtitle my-2 text-body-secondary">Duration: {{ quiz.duration }} minutes</h5>
+            <a href="" class="btn btn-warning py-3 px-5">Start Quiz</a>
+        </div>              
+    </div>
+{% endblock content %}

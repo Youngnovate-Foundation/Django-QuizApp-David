@@ -63,7 +63,7 @@ def view_qiuz_instructor(request, quiz_id):
     questions = quiz.questions.all()
     return render(request, 'quiz_app/Instructor/view_quiz_instructor.html', {'quiz': quiz,'questions': questions})
 
-def take_quiz(request, quiz_id):
+def start_quiz(request, quiz_id):
     quiz = Quiz.objects.get(id=quiz_id)
     questions = quiz.questions.all()
-    return render(request, 'quiz_app/Student/view_quiz_student.html', {'quiz': quiz,'questions': questions})
+    return render(request, 'quiz_app/Student/start_quiz.html', {'quiz': quiz,'questions': questions})
