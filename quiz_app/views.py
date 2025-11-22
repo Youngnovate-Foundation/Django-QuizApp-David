@@ -15,8 +15,11 @@ def stu_home(request):
 
 @login_required
 def inst_home(request):
-    quizzes = Quiz.objects.all()
-    return render(request, 'quiz_app/Instructor/inst_home.html', {'quizzes': quizzes})
+    all_quizzes = Quiz.objects.all()
+    user_quizzes = all_quizzes.filter(user=request.user)  # Only quizzes created by this instructor
+    return render(request, 'quiz_app/Instructor/inst_home.html', {
+        'user_quizzes': user_quizzes
+    })
 
 class Create_QuizView(View):
     def get(self, request):

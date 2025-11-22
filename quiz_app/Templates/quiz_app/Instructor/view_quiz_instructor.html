@@ -17,7 +17,7 @@
 
 {% block content %}
     {% if questions %}
-        <div class="card w-50 p-5 mx-auto">
+        <div class="card w-50 p-5 mx-auto mb-5">
             <h3 class="card-title text-center">{{ quiz.title }}</h3>
             {% for question in questions %}
                 <h5 class="card-subtitle my-2 text-body-secondary">Question {{ forloop.counter }}: ({{ question.question_type}})</h5>
@@ -68,8 +68,15 @@
             {% endfor %}
             <a href="{% url 'instructor_home' %}" class="btn btn-warning mt-3 py-2 w-25">Back</a>
             {% else %}
-                <h3 class="card-title">{{ quiz.title }}</h3>
-                <p>No questions added yet for this quiz<a href="{% url 'add_question' quiz.id %}">Create one</a>.</p>
+                <div class="text-center p-5 mb-5">
+                    <h3 class="card-title pt-5 display-5">{{ quiz.title }}</h3>
+                    <p class="display-6 text-muted mb-4">No questions yet.<br>
+                        <small>Create your first question to get started!</small>
+                    </p>
+                    <a href="{% url 'add_question' quiz.id%}" class="btn btn-warning btn-lg px-5 py-3">
+                        Add Question
+                    </a>
+                </div>
         </div>
     {% endif %}
 {% endblock content %}

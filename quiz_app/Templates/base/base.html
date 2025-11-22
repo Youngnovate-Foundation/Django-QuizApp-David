@@ -42,7 +42,13 @@
     {% endblock content %}
 
     {% block footer %}
-
+        <footer class="footer text-muted bg-warning py-4">
+            <div class="container">
+                <p class="float-end mb-1">Powered by <a href="https://www.django.com">Django</a>
+                <p class="mb-1">QuizHub - </p>
+                <p class="mb-0">Copyright © {% now 'Y' %} <a href="">AutoMax<a/></p>
+            </div>
+        </footer>
     {% endblock footer %}
 
     

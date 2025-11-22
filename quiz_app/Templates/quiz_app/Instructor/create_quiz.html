@@ -19,7 +19,7 @@
 
 {% comment %} Main Body Content {% endcomment %}
 {% block content %}
-    <div class="card w-50 p-5 mx-auto">
+    <div class="card w-50 p-5 mx-auto mb-5">
         <form action="" method="post">
             {% csrf_token %}
             {{create_quiz_form | crispy }}

@@ -17,11 +17,11 @@
     {% endblock nav-items %}
 
     {% block content %}
-        <div class="card w-50 p-5 mx-auto">
+        <div class="card w-50 p-5 mx-auto mb-5">
             <form action="" method="post">
                 {% csrf_token %}
                 {{add_question_form | crispy }}
-            <button type="submit" class="btn btn-warning mt-3 py-3 w-100">Add Question</button>
+                <button type="submit" class="btn btn-warning mt-3 py-3 w-100">Add Question</button>
             </form>
         </div>
 {% endblock content %}

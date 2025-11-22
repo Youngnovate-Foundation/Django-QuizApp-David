@@ -16,13 +16,12 @@
 {% endblock nav-items %}
 
 {% block content %}
-    <h2 class="text-center">Welcome to the Quiz App!</h2>
-    <h3>Available Quizes</h3>
-
+    <h2 class="text-center display-5">Welcome to the Quiz App!</h2>
+    <h3 class="text-center display-6">{{user.Full_name}}</h3>
     <main class="d-flex justify-content-evenly flex-wrap pt-5">
         {% if quizzes %}
             {% for quiz in quizzes %}
-                <div class="card w-25" style="min-width: 300px;">
+                <div class="card w-25 mb-5" style="min-width: 300px;">
                     <div class="card-body">
                         <div class="px-4 pt-4 pb-2 mb-4">
                             <h4 class="card-title mb-4 text-center">{{ quiz.title }}</h5>
