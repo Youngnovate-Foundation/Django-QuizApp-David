@@ -5,15 +5,18 @@ from .models import Quiz, Question
 from .forms import Quiz_Form, Question_Form
 from django.contrib.auth.decorators import login_required
 from users.models import CustomUser
+from .decourators import instructor_required, student_required
 
 # Create your views here.
 @login_required
+@student_required
 def stu_home(request):
     quizzes = Quiz.objects.all()
     users = CustomUser.objects.all()
     return render(request, 'quiz_app/Student/stu_home.html', {'quizzes': quizzes, 'users': users})
 
 @login_required
+@instructor_required
 def inst_home(request):
     all_quizzes = Quiz.objects.all()
     user_quizzes = all_quizzes.filter(user=request.user)  # Only quizzes created by this instructor

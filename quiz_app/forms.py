@@ -32,7 +32,7 @@ class Question_Form(forms.ModelForm):
             'correct_option': 'Correct Option (For MCQ)',
             'answer_text_SA': 'Answer Text (For Short Answer Questions)',
             'answer_text_TF': 'Answer (For True/False Questions)',
-            'point': 'Mark fo question',
+            'point': 'Mark for question',
         }
 
         widgets ={
