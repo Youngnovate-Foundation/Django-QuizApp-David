@@ -36,6 +36,7 @@ class Question(models.Model):
     correct_option = models.CharField(max_length=1, choices=Options, blank=True, null=True)
     answer_text_SA = models.TextField(blank=True, null=True)
     answer_text_TF = models.CharField(blank=True, null=True, choices=[('True', 'True'), ('False', 'False')])
+    point = models.PositiveIntegerField(default=1, blank=True, null=True)
 
     def __str__(self):
         return f'{self.quiz.title} - {self.question_text}'

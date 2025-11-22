@@ -32,6 +32,7 @@ class Question_Form(forms.ModelForm):
             'correct_option': 'Correct Option (For MCQ)',
             'answer_text_SA': 'Answer Text (For Short Answer Questions)',
             'answer_text_TF': 'Answer (For True/False Questions)',
+            'point': 'Mark fo question',
         }
 
         widgets ={
@@ -45,4 +46,5 @@ class Question_Form(forms.ModelForm):
             'correct_option': forms.Select(attrs={'class': 'form-select'}),
             'answer_text_SA': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter answer text', 'rows': 3}),
             'answer_text_TF': forms.Select(attrs={'class': 'form-select'}),
+            'point': forms.NumberInput(attrs={'class': 'form-control','default':1}),
         }
