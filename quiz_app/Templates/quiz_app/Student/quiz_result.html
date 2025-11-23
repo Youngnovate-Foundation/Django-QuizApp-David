@@ -1,0 +1,89 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Quiz Complete - {{ attempt.quiz.title }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <!-- Success Card -->
+            <div class="card shadow-lg border-0 text-center">
+                <div class="card-header bg-gradient 
+                    {% if percentage >= 80 %}bg-success
+                    {% elif percentage >= 60 %}bg-warning
+                    {% elif percentage >= 40 %}bg-orange
+                    {% else %}bg-danger
+                    {% endif %} text-white py-4">
+                    <h1 class="mb-0">
+                        {% if percentage >= 70 %}
+                            Congratulations!
+                        {% elif percentage >= 50 %}
+                            Good Effort!
+                        {% else %}
+                            Better Luck Next Time
+                        {% endif %}
+                    </h1>
+                </div>
+
+                <div class="card-body py-5">
+                    <!-- Big Score -->
+                    <div class="mb-4">
+                        <h1 class="display-1 fw-bold text-primary">
+                            {{ attempt.score|default:0 }}
+                            <small class="text-muted fs-3">/ {{ total_points }}</small>
+                        </h1>
+                        <h2 class="text-success fw-bold">
+                            {{ percentage|floatformat:1 }}%
+                        </h2>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- Quiz Details -->
+                    <div class="row text-start mb-4">
+                        <div class="col-md-6">
+                            <p class="mb-2"><strong>Quiz:</strong> {{ attempt.quiz.title }}</p>
+                            <p class="mb-2"><strong>Duration:</strong> {{ attempt.quiz.duration }} minutes</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-2"><strong>Started:</strong> {{ attempt.started_at|date:"d M Y, H:i" }}</p>
+                            <p class="mb-2"><strong>Completed:</strong> {{ attempt.completed_at|date:"d M Y, H:i" }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Performance Message -->
+                    <div class="alert 
+                        {% if percentage >= 80 %}alert-success
+                        {% elif percentage >= 60 %}alert-warning
+                        {% else %}alert-danger
+                        {% endif %}">
+                        {% if percentage >= 90 %}
+                            Outstanding performance! You're a quiz master!
+                        {% elif percentage >= 70 %}
+                            Excellent work! Keep it up!
+                        {% elif percentage >= 50 %}
+                            Not bad! A little more practice and you'll ace it.
+                        {% else %}
+                            Don't give up! Review and try again.
+                        {% endif %}
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                        <a href="{% url 'student_home' %}" class="btn btn-primary btn-lg px-5">
+                            Back to Home
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-footer text-muted small">
+                    Thank you for taking the quiz!
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

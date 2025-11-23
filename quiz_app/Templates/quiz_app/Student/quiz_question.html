@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+{% block title %}{{ quiz.title }} - Question {{ current }}/{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3>{{ quiz.title }}</h3>
+        <div class="alert alert-info p-2">
+            <strong>Time Left: <span id="timer">{{ time_left }}</span>s</strong>
+        </div>
+    </div>
+
+    {% comment %} <div class="progress mb-3">
+        <div class="progress-bar" style="width: {{ current|div:total|mul:100 }}%"></div>
+    </div> {% endcomment %}
+    <small>{{ current }} of {{ total }}</small>
+
+    <div class="card my-5">
+        <div class="card-header">
+            <h5>Question {{ current }} ({{ question.get_question_type_display }})</h5>
+        </div>
+        <div class="card-body">
+            <p class="lead">{{ question.question_text }}</p>
+
+            <form method="post" id="qform">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <div class="d-flex justify-content-between mt-4">
+                    {% if prev_q %}
+                        <button name="prev" class="btn btn-secondary">Previous</button>
+                    {% else %}
+                        <div></div>
+                    {% endif %}
+
+                    {% if next_q %}
+                        <button name="next" class="btn btn-primary">Next</button>
+                    {% else %}
+                        <button name="finish" class="btn btn-success">Finish Quiz</button>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+let time = {{ time_left }};
+const timer = setInterval(() => {
+    if (time <= 0) {
+        clearInterval(timer);
+        document.getElementById('qform').innerHTML += '<input type="hidden" name="finish">';
+        document.getElementById('qform').submit();
+    }
+    document.getElementById('timer').textContent = time;
+    time--;
+}, 1000);
+</script>
+{% endblock %}

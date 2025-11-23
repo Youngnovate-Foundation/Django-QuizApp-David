@@ -36,10 +36,10 @@
                                     {% endfor %}
                                 </small>
                             </p>
-                            <a href="{% url 'start_quiz' quiz.id %}" class="btn btn-outline-secondary py-2 w-100">Take Quiz</a>
-                            <a href="" class="btn btn-outline-secondary mt-3 py-2 w-100">Show Results</a>
+                            <a href="{% url 'quiz_instruction' quiz.id %}" class="btn btn-outline-secondary py-2 w-100">Take Quiz</a>
+                            <a href="{% url 'student_quiz_result_detail' quiz.id %}" class="btn btn-outline-secondary mt-3 py-2 w-100">Show Results</a>
                         </div>
-                    </div>                  
+                    </div>
                 </div>
             {% endfor %}
         {% else %}

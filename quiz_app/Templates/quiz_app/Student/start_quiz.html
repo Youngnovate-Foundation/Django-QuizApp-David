@@ -24,7 +24,7 @@
         </p>
         <div class="d-flex justify-content-between mt-3">
             <h5 class="card-subtitle my-2 text-body-secondary">Duration: {{ quiz.duration }} minutes</h5>
-            <a href="" class="btn btn-warning py-3 px-5">Start Quiz</a>
+            <a href="{% url 'start_quiz' quiz.id%}" class="btn btn-warning py-3 px-5">Start Quiz</a>
         </div>              
     </div>
 {% endblock content %}

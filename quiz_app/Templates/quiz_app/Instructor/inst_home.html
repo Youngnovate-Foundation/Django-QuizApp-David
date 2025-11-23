@@ -30,7 +30,7 @@
                                 <a href="{% url 'add_question' quiz.id %}" class="btn btn-warning py-2">Add Question</a>
                                 <a href="{% url 'view_quiz_instructor' quiz.id %}" class="btn btn-warning py-2 px-4">Details</a>
                             </div>
-                            <a href="" class="btn btn-outline-secondary mt-3 py-2 w-100">Show Participants</a>
+                            <a href="{% url 'quiz_participants' quiz.id %}" class="btn btn-outline-secondary mt-3 py-2 w-100">Show Participants</a>
                         </div>
                     </div>                  
                 </div>

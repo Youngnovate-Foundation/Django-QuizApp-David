@@ -1,0 +1,52 @@
+{% extends 'base/base.html' %}
+{% block title %}Participants - {{ quiz.title }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">Participants & Results</h2>
+    <h4 class="text-primary mb-4">{{ quiz.title }}</h4>
+
+    {% if attempts %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Student</th>
+                        <th>Email</th>
+                        <th>Score</th>
+                        <th>Percentage</th>
+                        <th>Date Completed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in attempts %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><strong>{{ a.student.Full_name|default:a.student.username }}</strong></td>
+                        <td>{{ a.student.email }}</td>
+                        <td>{{ a.score|default:0 }} / {{ total_points }}</td>
+                        <td>
+                            <span class="badge 
+                                {% if a.percentage >= 80 %}bg-success
+                                {% elif a.percentage >= 50 %}bg-warning text-dark
+                                {% else %}bg-danger
+                                {% endif %} fs-6">
+                                {{ a.percentage|floatformat:1 }}%
+                            </span>
+                        </td>
+                        <td>{{ a.completed_at|date:"d M Y H:i" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center">
+            No one has completed this quiz yet.
+        </div>
+    {% endif %}
+
+    <a href="{% url 'instructor_home' %}" class="btn btn-secondary mt-3">Back to My Quizzes</a>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}My Quiz Results{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5 display-5 fw-bold text-primary">
+        My Quiz Results
+    </h1>
+
+    {% if attempts %}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for attempt in attempts %}
+                {% comment %}
+                    We calculate total_points in the view and attach it to the attempt
+                    So we can use it directly here → clean and fast!
+                {% endcomment %}
+
+                {% with total_points=attempt.total_points|default:attempt.quiz.questions.count %}
+                    {% with earned=attempt.score|default:0 %}
+                        {% widthratio earned total_points 100 as percentage %}
+                        {% if percentage == None %}{% with percentage=0 %}{% endwith %}{% endif %}
+
+                        <div class="col">
+                            <div class="card h-100 shadow-sm border-0 
+                                {% if percentage >= 80 %}border-success border-3
+                                {% elif percentage >= 50 %}border-warning border-3
+                                {% else %}border-danger border-3
+                                {% endif %}">
+                                
+                                <div class="card-header text-white text-center py-3
+                                    {% if percentage >= 80 %}bg-success
+                                    {% elif percentage >= 50 %}bg-warning text-dark
+                                    {% else %}bg-danger
+                                    {% endif %}">
+                                    <h5 class="mb-0 fw-bold">{{ attempt.quiz.title }}</h5>
+                                </div>
+
+                                <div class="card-body text-center py-4">
+                                    <div class="mb-3">
+                                        <h2 class="display-6 fw-bold text-primary mb-0">
+                                            {{ earned }} / {{ total_points }}
+                                        </h2>
+                                        <h3 class="mt-2
+                                            {% if percentage >= 80 %}text-success
+                                            {% elif percentage >= 50 %}text-warning
+                                            {% else %}text-danger
+                                            {% endif %}">
+                                            {{ percentage|floatformat:0 }}%
+                                        </h3>
+                                    </div>
+
+                                    <p class="text-muted small mb-2">
+                                        Completed on
+                                    </p>
+                                    <p class="fw-bold text-dark">
+                                        {{ attempt.completed_at|date:"d M Y" }}<br>
+                                        <span class="text-muted">{{ attempt.completed_at|time:"H:i" }}</span>
+                                    </p>
+                                </div>
+
+                                <div class="card-footer bg-transparent border-0 pt-3">
+                                    <a href="{% url 'quiz_finish' attempt.id %}" 
+                                       class="btn btn-outline-primary btn-sm w-100 fw-bold">
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endwith %}
+                {% endwith %}
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <div class="text-center py-5">
+            <img src="{% static 'images/no-data.svg' %}" 
+                 alt="No results" class="img-fluid mb-4" style="max-width: 180px; opacity: 0.7;">
+            <h3 class="text-muted">No quiz results yet</h3>
+            <p class="lead text-muted">Start taking quizzes to see your performance here!</p>
+            <a href="{% url 'student_home' %}" class="btn btn-primary btn-lg px-5 mt-3">
+                Go to Quizzes
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

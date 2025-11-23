@@ -48,3 +48,26 @@ class Question_Form(forms.ModelForm):
             'answer_text_TF': forms.Select(attrs={'class': 'form-select'}),
             'point': forms.NumberInput(attrs={'class': 'form-control','default':1}),
         }
+
+class Answer_Form(forms.Form):
+    def __init__(self, question, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if question.question_type == 'MCQ':
+            choices = []
+            if question.option1: choices.append(('A', question.option1))
+            if question.option2: choices.append(('B', question.option2))
+            if question.option3: choices.append(('C', question.option3))
+            if question.option4: choices.append(('D', question.option4))
+            self.fields['selected_option'] = forms.ChoiceField(
+                choices=choices, widget=forms.RadioSelect, label="Choose correct option"
+            )
+        elif question.question_type == 'TF':
+            self.fields['selected_option'] = forms.ChoiceField(
+                choices=[('True', 'True'), ('False', 'False')],
+                widget=forms.RadioSelect, label="True or False?"
+            )
+        elif question.question_type == 'SA':
+            self.fields['answer_text'] = forms.CharField(
+                widget=forms.Textarea(attrs={'rows': 4, 'class': 'form-control'}),
+                label="Your Answer"
+            )
