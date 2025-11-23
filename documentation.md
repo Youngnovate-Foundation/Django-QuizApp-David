@@ -7,9 +7,9 @@ This is a Django-based quiz application that allows instructors to create quizze
 The app uses Django's authentication system with custom user roles. It includes features like progress saving, auto-submit on timeout, and instructor dashboards for viewing participant results.
 
 **Built with:**
-- Django 4.x (assumed)
-- Python 3.12+
-- Bootstrap for frontend (assumed from templates)
+- Django 4.x
+- Python 3.14
+- Bootstrap for frontend 
 
 **Key Features:**
 - User registration and login with roles (Student/Instructor)
@@ -131,14 +131,6 @@ Templates use Bootstrap for styling.
 3. As Instructor → View participants & scores
 4. As Student → View my results → Click to see detailed result
 
-## Future Improvements
-
-- Manual grading for Short Answer questions
-- Random question order
-- Prevent back button during quiz
-- Export results to CSV/PDF
-- Notifications for new quizzes
-
 **Last Updated**: November 23, 2025
 
-Contact for questions: [Your Name/Email]
+Contact for questions: [Atiemo-Keseku David Obeng/datiemokeseku16@gmil.com]
