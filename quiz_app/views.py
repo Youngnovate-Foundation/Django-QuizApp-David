@@ -188,73 +188,52 @@ def quiz_question(request, quiz_id, question_id):
     }
     return render(request, 'quiz_app/Student/quiz_question.html', context)
 
+# quiz_app/views.py
 @student_required
 def quiz_finish(request, attempt_id):
-    # FIXED: Removed completed_at__isnull=True so reload works!
-    attempt = get_object_or_404(
-        Quiz_Attempt, 
-        id=attempt_id, 
-        student=request.user
-    )
+    attempt = get_object_or_404(Quiz_Attempt, id=attempt_id, student=request.user)
 
+    # === ALWAYS calculate total_points and earned_points ===
+    total_points = 0
+    earned_points = 0
+
+    for answer in attempt.student_answer_set.all():
+        q = answer.question
+        points = q.point or 1
+        total_points += points
+
+        if q.question_type == 'MCQ':
+            if answer.selected_option == q.correct_option:
+                earned_points += points
+        elif q.question_type == 'TF':
+            if str(answer.selected_option) == q.answer_text_TF:
+                earned_points += points
+        elif q.question_type == "SA":
+                if str(answer.answer_text) == q.answer_text_SA:
+                    earned_points += points
+
+    # Save score only if quiz not already finished
     if not attempt.completed_at:
-        # === FIRST TIME FINISHING → Calculate score ===
-        total_points = 0
-        earned_points = 0
-
-        for answer in attempt.student_answer_set.all():  # or student_answer_set.all() if you didn't add related_name
-            question = answer.question
-            points = question.point or 1
-            total_points += points
-
-            if question.question_type == 'MCQ':
-                if answer.selected_option == question.correct_option:
-                    earned_points += points
-            elif question.question_type == 'TF':
-                if str(answer.selected_option) == question.answer_text_TF:
-                    earned_points += points
-            elif question.question_type == "SA":
-                if str(answer.answer_text) == question.answer_text_SA:
-                    earned_points += points
-
         attempt.score = earned_points
         attempt.completed_at = timezone.now()
         attempt.save()
 
-        percentage = (earned_points / total_points * 100) if total_points > 0 else 0
-        messages.success(request, f"Quiz completed! You scored {earned_points}/{total_points} ({percentage:.1f}%)")
+    # === SAFE CALCULATIONS (NO MORE ERRORS) ===
+    earned_points = attempt.score or 0
+    total_points = total_points or 1  # prevent division by zero
+
+    if total_points == 0:
+        percentage = 0.0
     else:
-        # Already finished → just recalculate for display
-        total_points = sum((a.question.point or 1) for a in attempt.student_answer_set.all())
-        earned_points = attempt.score or 0
-        percentage = (earned_points / total_points * 100) if total_points > 0 else 0
+        percentage = round((earned_points / total_points) * 100, 1)
 
     context = {
         'attempt': attempt,
         'earned_points': earned_points,
         'total_points': total_points,
-        'percentage': round(percentage, 1),
+        'percentage': percentage,
     }
     return render(request, 'quiz_app/Student/quiz_result.html', context)
-
-@student_required
-def student_results(request):
-    # All completed attempts for this student
-    completed_attempts = Quiz_Attempt.objects.filter(
-        student=request.user,
-        completed_at__isnull=False
-    ).select_related('quiz').order_by('-completed_at')
-
-    for attempt in completed_attempts:
-        total = attempt.quiz.questions.aggregate(
-            total=models.Sum('point')
-        )['total']
-        attempt.total_points = total or attempt.quiz.questions.count()
-
-    context = {
-        'attempts': completed_attempts
-    }
-    return render(request, 'quiz_app/Student/student_results.html', context)
 
 @instructor_required
 def quiz_participants(request, quiz_id):
@@ -285,6 +264,25 @@ def quiz_participants(request, quiz_id):
     return render(request, 'quiz_app/Instructor/quiz_participants.html', context)
 
 @student_required
+def student_results(request):
+    # All completed attempts for this student
+    completed_attempts = Quiz_Attempt.objects.filter(
+        student=request.user,
+        completed_at__isnull=False
+    ).select_related('quiz').order_by('-completed_at')
+
+    for attempt in completed_attempts:
+        total = attempt.quiz.questions.aggregate(
+            total=models.Sum('point')
+        )['total']
+        attempt.total_points = total or attempt.quiz.questions.count()
+
+    context = {
+        'attempts': completed_attempts
+    }
+    return render(request, 'quiz_app/Student/student_results.html', context)
+
+@student_required
 def student_quiz_result_detail(request, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id)
 
@@ -293,7 +291,7 @@ def student_quiz_result_detail(request, quiz_id):
         student=request.user,
         quiz=quiz
     ).first()  # Returns None if no attempt
-
+     
     # Calculate total points once
     total_points = quiz.questions.aggregate(
         total=models.Sum('point')
