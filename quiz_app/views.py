@@ -85,7 +85,7 @@ def start_quiz(request, quiz_id):
 
     if already_completed:
         messages.error(request, "You have already completed this quiz. Only one attempt is allowed.")
-        return redirect('student_results')  # or redirect('student_home')
+        return redirect('student_home')  # or redirect('student_home')
 
     # Check if there's an ongoing (unfinished) attempt
     ongoing_attempt = Quiz_Attempt.objects.filter(
@@ -262,25 +262,6 @@ def quiz_participants(request, quiz_id):
         'total_points': total_points,
     }
     return render(request, 'quiz_app/Instructor/quiz_participants.html', context)
-
-@student_required
-def student_results(request):
-    # All completed attempts for this student
-    completed_attempts = Quiz_Attempt.objects.filter(
-        student=request.user,
-        completed_at__isnull=False
-    ).select_related('quiz').order_by('-completed_at')
-
-    for attempt in completed_attempts:
-        total = attempt.quiz.questions.aggregate(
-            total=models.Sum('point')
-        )['total']
-        attempt.total_points = total or attempt.quiz.questions.count()
-
-    context = {
-        'attempts': completed_attempts
-    }
-    return render(request, 'quiz_app/Student/student_results.html', context)
 
 @student_required
 def student_quiz_result_detail(request, quiz_id):

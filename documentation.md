@@ -80,7 +80,6 @@ The app has the following models:
 - **start_quiz**: Start/resume quiz (enforces one attempt)
 - **quiz_question**: Display one question, handle answers, navigation, timer
 - **quiz_finish**: Finish quiz, calculate score, show result
-- **student_results**: List all student's completed quizzes
 - **quiz_participants**: Instructor views all participants and scores for one quiz
 - **student_quiz_result_detail**: Student views detailed result for one quiz
 
@@ -111,7 +110,7 @@ Custom decorators: `instructor_required`, `student_required` (in quiz_app/decour
 
 - **Base Template**: `base/base.html` (navbar with role-based links)
 - **Login/Register**: `users/index.html`, `users/register.html`
-- **Student**: `stu_home.html` (quiz list), `start_quiz.html` (instructions), `quiz_question.html` (one question), `quiz_result.html` (result), `student_results.html` (all results), `student_quiz_result_detail.html` (one quiz detail)
+- **Student**: `stu_home.html` (quiz list), `start_quiz.html` (instructions), `quiz_question.html` (one question), `quiz_result.html` (result), `student_quiz_result_detail.html` (one quiz detail)
 - **Instructor**: `inst_home.html` (quiz list), `create_quiz.html`, `add_question.html`, `view_quiz_instructor.html`, `quiz_participants.html` (participants list)
 
 Templates use Bootstrap for styling.

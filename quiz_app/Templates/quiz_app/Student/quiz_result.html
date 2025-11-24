@@ -12,17 +12,15 @@
             <div class="card shadow-lg border-0 text-center">
                 <div class="card-header bg-gradient 
                     {% if percentage >= 80 %}bg-success
-                    {% elif percentage >= 60 %}bg-warning
-                    {% elif percentage >= 40 %}bg-orange
+                    {% elif percentage >= 60 %}bg-primary
+                    {% elif percentage >= 40 %}bg-warning
                     {% else %}bg-danger
                     {% endif %} text-white py-4">
                     <h1 class="mb-0">
-                        {% if percentage >= 70 %}
-                            Congratulations!
-                        {% elif percentage >= 50 %}
-                            Good Effort!
-                        {% else %}
-                            Better Luck Next Time
+                        {% if percentage >= 80 %}Excellent!
+                        {% elif percentage >= 60 %}Great Job!
+                        {% elif percentage >= 40 %}Good Try
+                        {% else %}Keep Practicing
                         {% endif %}
                     </h1>
                 </div>
@@ -66,7 +64,7 @@
                         {% elif percentage >= 50 %}
                             Not bad! A little more practice and you'll ace it.
                         {% else %}
-                            Don't give up! Review and try again.
+                            Good Luck Next Time!
                         {% endif %}
                     </div>
 
